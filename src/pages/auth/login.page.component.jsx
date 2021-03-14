@@ -55,12 +55,12 @@ const LoginPage = () => {
 			</Button>
 			<Grid container>
 				<Grid item xs>
-					<Link to='/forgot-password' variant='body2'>
+					<Link to='/auth/forgot-password' variant='body2'>
 						Forgot password?
 					</Link>
 				</Grid>
 				<Grid item>
-					<Link to='/register' variant='body2'>
+					<Link to='/auth/register' variant='body2'>
 						{"Don't have an account? Sign Up"}
 					</Link>
 				</Grid>

@@ -1,0 +1,23 @@
+{
+	"category": [
+		{ "title": "Economy" },
+		{ "title": "Finance" },
+		{ "title": "Health" },
+		{ "title": "Fashion" },
+		{ "title": "Media" },
+		{ "title": "Gaming" },
+		{ "title": "Travel" },
+		{ "title": "Food" },
+		{ "title": "Lifestyle" },
+		{ "title": "Trending" },
+		{ "title": "Career" },
+		{ "title": "Education" },
+		{ "title": "Movies" },
+		{ "title": "Science" },
+		{ "title": "Politics" },
+		{ "title": "Sports" },
+		{ "title": "Entertainment" },
+		{ "title": "News" },
+		{ "title": "Technology" }
+	]
+}

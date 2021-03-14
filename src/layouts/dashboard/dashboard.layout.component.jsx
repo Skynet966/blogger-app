@@ -20,6 +20,10 @@ import HomeIcon from '@material-ui/icons/Home';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { Route } from 'react-router-dom';
+import CreatePost from '../../pages/dashboard/create-post.page.component';
+import BlogPost from '../../pages/dashboard/blog-post.page.component';
+import AllPosts from '../../pages/dashboard/all-posts.page.component';
 
 const Menu = [
 	{ text: 'Home', icon: <HomeIcon /> },
@@ -127,7 +131,7 @@ export default function DashboardLayout() {
 						<MenuIcon />
 					</IconButton>
 					<Typography variant='h6' noWrap>
-						Mini variant drawer
+						Blog Post App
 					</Typography>
 				</Toolbar>
 			</AppBar>
@@ -166,7 +170,9 @@ export default function DashboardLayout() {
 			</Drawer>
 			<main className={classes.content}>
 				<div className={classes.toolbar} />
-				{/* //write your code here... */}
+				<Route path='/dashboard/blog-post' component={BlogPost} />
+				<Route path='/dashboard/create-post' component={CreatePost} />
+				<Route path='/dashboard/posts' component={AllPosts} />
 			</main>
 		</div>
 	);

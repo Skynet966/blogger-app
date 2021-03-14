@@ -35,13 +35,13 @@ export default function AuthLayout() {
 				</Avatar>
 				<Typography component='h1' variant='h5'>
 					<Switch>
-						<Route path='/login' render={() => 'Sign In'} />
-						<Route path='/register' render={() => 'Sign Up'} />
+						<Route path='/auth/login' render={() => 'Sign In'} />
+						<Route path='/auth/register' render={() => 'Sign Up'} />
 					</Switch>
 				</Typography>
 				<Switch>
-					<Route path='/login' component={LoginPage} />
-					<Route path='/register' component={RegisterPage} />
+					<Route path='/auth/login' component={LoginPage} />
+					<Route path='/auth/register' component={RegisterPage} />
 				</Switch>
 			</div>
 			<Box mt={8}>

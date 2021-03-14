@@ -1,19 +1,13 @@
 import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
+import AppReducer from './app/app.reducer';
+import { persistStore } from 'redux-persist';
+// import createSagaMiddleware from 'redux-saga';
+// import BlogSagas from './app/blogs/blogs.sagas';
 
-const DEFAULT_STATE = {
-	posts: [],
-	messages: ''
-};
-
-const AppReducer = (state = DEFAULT_STATE, { type, payload }) => {
-	switch (type) {
-		case 'HEAVEY_DRIVER':
-			return { ...state, message: 'thum to bday heavy driver niklay bhai' };
-		default:
-			return { ...state };
-	}
-};
-
-const store = createStore(AppReducer, applyMiddleware(logger));
+// const sagaMiddleware = createSagaMiddleware();
+const middleware = [logger];
+const store = createStore(AppReducer, applyMiddleware(...middleware));
+// sagaMiddleware.run(BlogSagas);
+export const persistor = persistStore(store);
 export default store;
