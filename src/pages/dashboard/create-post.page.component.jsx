@@ -84,7 +84,12 @@ const CreatePost = ({ createPost, posts, history }) => {
 			value.length < 4 ? (isValid = false) : ''
 		);
 		if (isValid) {
-			createPost({ ...post, post_id: Date.now(), created_at: Date.now() });
+			createPost({
+				...post,
+				post_id: Date.now(),
+				created_at: Date.now(),
+				likes: 0
+			});
 			setTimeout(() => {
 				history.push({
 					pathname: '/dashboard/blog-post',

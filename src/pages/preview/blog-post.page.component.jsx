@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,6 +8,15 @@ import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import Fab from '@material-ui/core/Fab';
+import { likeBlog } from '../../redux/app/blogs/blogs.actions';
+import { connect } from 'react-redux';
+import {
+	selectChanges,
+	selectPosts
+} from '../../redux/app/blogs/blogs.selectors';
+import { createStructuredSelector } from 'reselect';
 
 const useStyles = makeStyles({
 	root: {
@@ -15,12 +24,30 @@ const useStyles = makeStyles({
 		maxWidth: '80vw',
 		padding: '20px',
 		margin: '0 auto'
+	},
+	likeBtn: {
+		textAlign: 'right',
+		gap: '5px'
 	}
 });
 
-const BlogPostPage = ({ history, location: { state } }) => {
+const BlogPostPage = ({
+	history,
+	location: { state },
+	likePost,
+	posts,
+	change
+}) => {
 	const classes = useStyles();
-	const post = state;
+	const [post, setPost] = useState(
+		posts.find(x => x.post_id === state.post_id)
+	);
+	useEffect(() => setPost(posts.find(x => x.post_id === state.post_id)), [
+		change
+	]);
+	const handlePostLike = () => {
+		likePost(post.post_id);
+	};
 	return (
 		<>
 			<Paper className={classes.root}>
@@ -54,8 +81,33 @@ const BlogPostPage = ({ history, location: { state } }) => {
 				<Typography variant='body1' gutterBottom>
 					{post.content}
 				</Typography>
+				<Grid
+					className={classes.likeBtn}
+					container
+					direction='row'
+					justify='flex-end'
+					alignItems='center'
+				>
+					<Typography variant='overline' display='block' gutterBottom>
+						{post.likes} Likes
+					</Typography>
+					<Fab aria-label='like' color='secondary' onClick={handlePostLike}>
+						<FavoriteIcon />
+					</Fab>
+				</Grid>
 			</Paper>
 		</>
 	);
 };
-export default withRouter(BlogPostPage);
+const mapStateToProps = createStructuredSelector({
+	posts: selectPosts,
+	change: selectChanges
+});
+const mapDispatchToProps = dispatch => ({
+	likePost: postId => dispatch(likeBlog(postId))
+});
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withRouter(BlogPostPage));

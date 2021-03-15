@@ -118,7 +118,7 @@ const BlogPost = ({
 					</Button>
 				)}
 
-				<Button ariant='contained' color='secondary' onClick={handleDelete}>
+				<Button variant='contained' color='secondary' onClick={handleDelete}>
 					Delete
 				</Button>
 			</ButtonGroup>
