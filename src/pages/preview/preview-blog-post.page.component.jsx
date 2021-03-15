@@ -55,7 +55,7 @@ const PreviewBlogPostPage = ({
 
 	return (
 		<>
-			<Paper className={classes.root}>
+			<Paper className={classes.previewRoot}>
 				<Box marginBottom='20px'>
 					<Button onClick={() => history.push('/')}>
 						<KeyboardBackspaceIcon />
