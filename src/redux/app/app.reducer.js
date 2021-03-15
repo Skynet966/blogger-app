@@ -1,13 +1,18 @@
 import { combineReducers } from 'redux';
-import BlogPostReducer from './blogs/blogs.reducer';
-import persistReducer from 'redux-persist/es/persistReducer';
 import storage from 'redux-persist/lib/storage';
+import persistReducer from 'redux-persist/es/persistReducer';
+
+//Blog Reducer
+import BlogPostReducer from './blogs/blogs.reducer';
+
+//Config for the presistance of state in localStorage of browser
 const persistConfig = {
 	key: 'app',
 	storage,
 	whitelist: ['blogs']
 };
 
+//Helps to combine mulitple Reducers
 const AppReducer = combineReducers({
 	blogs: BlogPostReducer
 });

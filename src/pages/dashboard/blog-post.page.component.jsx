@@ -1,30 +1,30 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
+//Selector
 import { selectPosts } from '../../redux/app/blogs/blogs.selectors';
+
+//Redux actions
 import { deleteBlog, updateBlog } from '../../redux/app/blogs/blogs.actions';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Categories from '../../data/categories.json';
-import { makeStyles } from '@material-ui/core/styles';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { withRouter } from 'react-router-dom';
+
+//Material UI components
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Categories from '../../data/categories.json';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+//Material UI Icon
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
-const useStyles = makeStyles(theme => ({
-	form: {
-		width: '100%', //Fix IE 11 issue.
-		marginTop: theme.spacing(1)
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2)
-	}
-}));
+//Material UI styles
+import useStyles from '../pages.styles';
 
-const BlogPost = ({
+//Review Blog-post page component
+const BlogPostPage = ({
 	history,
 	location: { state },
 	updatePost,
@@ -32,6 +32,8 @@ const BlogPost = ({
 	deletePost
 }) => {
 	const classes = useStyles();
+
+	//private state
 	const [data, setData] = useState({
 		post:
 			state instanceof Object
@@ -45,6 +47,8 @@ const BlogPost = ({
 		title_message: '',
 		edit_mode: false
 	});
+
+	//hnadle changes of input box
 	const handleChange = e => {
 		const { name, value } = e.target;
 		if (value.length > 3) {
@@ -64,6 +68,8 @@ const BlogPost = ({
 			});
 		}
 	};
+
+	//Handle Blur event of title input box
 	const handleBlur = e => {
 		const postTitle = e.target.value;
 		if (postTitle.length === 0) {
@@ -79,6 +85,8 @@ const BlogPost = ({
 				title_message: `${postTitle} is already created`
 			});
 	};
+
+	//Handle submission of form submit
 	const handleSubmit = e => {
 		e.preventDefault();
 		const { post } = data;
@@ -90,13 +98,18 @@ const BlogPost = ({
 			updatePost({ ...post, updated_at: Date.now() });
 		}
 	};
+
+	//Toggle edit button from edit to cancel and vice-versa
 	const toggleEditMode = () => {
 		setData({ ...data, edit_mode: !data.edit_mode });
 	};
+
+	//delete post on execution of this event
 	const handleDelete = () => {
 		deletePost(data.post.post_id);
 		history.push('/dashboard');
 	};
+
 	return (
 		<Box>
 			<ButtonGroup disableElevation variant='contained' color='primary'>
@@ -196,15 +209,18 @@ const BlogPost = ({
 	);
 };
 
+//Get all post from state container
 const mapStateToProps = createStructuredSelector({
 	posts: selectPosts
 });
 
+//bind actions to trigger state change
 const mapDispatchToProps = dispatch => ({
 	updatePost: post => dispatch(updateBlog(post)),
 	deletePost: postId => dispatch(deleteBlog(postId))
 });
+
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withRouter(BlogPost));
+)(withRouter(BlogPostPage));

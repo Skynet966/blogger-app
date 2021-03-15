@@ -1,42 +1,35 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import moment from 'moment';
-
-import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
+
+//Posts Selector
 import { selectPosts } from '../../redux/app/blogs/blogs.selectors';
 
-const useStyles = makeStyles({
-	root: {
-		width: 345,
-		maxWidth: 345
-	},
-	media: {
-		height: 140
-	},
-	container: {
-		gap: '20px'
-	},
-	title: {
-		textTransform: 'capitalize'
-	}
-});
+//Material UI components
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import CardContent from '@material-ui/core/CardContent';
+import CardActionArea from '@material-ui/core/CardActionArea';
 
+//Material UI styles
+import useStyles from '../pages.styles';
+
+//Preview All Blog-posts Home page component
 const HomePage = ({ posts, history }) => {
 	const classes = useStyles();
+
+	//handle click event while click on post
 	const handleClick = post => {
 		history.push({
 			pathname: `/blog-post/${post.title}`,
 			state: post
 		});
 	};
+
 	return (
 		<Container>
 			<Grid container justify='space-around' className={classes.container}>
@@ -53,7 +46,10 @@ const HomePage = ({ posts, history }) => {
 				) : (
 					posts.map(post => (
 						<Grid key={post.post_id}>
-							<Card className={classes.root} onClick={() => handleClick(post)}>
+							<Card
+								className={classes.homeRoot}
+								onClick={() => handleClick(post)}
+							>
 								<CardActionArea>
 									<CardContent>
 										<Grid
@@ -98,6 +94,8 @@ const HomePage = ({ posts, history }) => {
 		</Container>
 	);
 };
+
+//Get all post from state container
 const mapStateToProps = createStructuredSelector({
 	posts: selectPosts
 });

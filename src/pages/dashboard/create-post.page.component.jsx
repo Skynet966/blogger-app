@@ -1,37 +1,33 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
+//Selector
 import { selectPosts } from '../../redux/app/blogs/blogs.selectors';
+
+//Action Method
 import { createBlog } from '../../redux/app/blogs/blogs.actions';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Categories from '../../data/categories.json';
-import { makeStyles } from '@material-ui/core/styles';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { withRouter } from 'react-router-dom';
+
+//Material UI components
 import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Categories from '../../data/categories.json';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+//Material UI icon
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
-import Paper from '@material-ui/core/Paper';
+//Material UI styles
+import useStyles from '../pages.styles';
 
-const useStyles = makeStyles(theme => ({
-	form: {
-		width: '100%', // Fix IE 11 issue.
-		marginTop: theme.spacing(1)
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2)
-	},
-	paper: {
-		padding: theme.spacing(2),
-		color: theme.palette.text.secondary,
-		minHeight: '80vh'
-	}
-}));
-
-const CreatePost = ({ createPost, posts, history }) => {
+//Create Blog-post page component
+const CreatePostPage = ({ createPost, posts, history }) => {
 	const classes = useStyles();
+
+	//private state
 	const [data, setData] = useState({
 		post: {
 			title: '',
@@ -46,6 +42,7 @@ const CreatePost = ({ createPost, posts, history }) => {
 		title_message: ''
 	});
 
+	//handle changes for input box
 	const handleChange = e => {
 		const { name, value } = e.target;
 		if (value.length > 3) {
@@ -65,6 +62,8 @@ const CreatePost = ({ createPost, posts, history }) => {
 			});
 		}
 	};
+
+	//Handle event on blur event of title input box
 	const handleBlur = e => {
 		const postTitle = e.target.value;
 		if (postTitle.length === 0) {
@@ -76,6 +75,8 @@ const CreatePost = ({ createPost, posts, history }) => {
 				title_message: `${postTitle} is already created`
 			});
 	};
+
+	//Handle submission of form on click of update button
 	const handleSubmit = e => {
 		e.preventDefault();
 		const { post } = data;
@@ -98,6 +99,7 @@ const CreatePost = ({ createPost, posts, history }) => {
 			}, 1000);
 		}
 	};
+
 	return (
 		<Paper elevation={3} className={classes.paper}>
 			<Box>
@@ -175,14 +177,17 @@ const CreatePost = ({ createPost, posts, history }) => {
 	);
 };
 
+//Get all posts from state container
 const mapStateToProps = createStructuredSelector({
 	posts: selectPosts
 });
 
+//Bind createPost action
 const mapDispatchToProps = dispatch => ({
 	createPost: post => dispatch(createBlog(post))
 });
+
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withRouter(CreatePost));
+)(withRouter(CreatePostPage));

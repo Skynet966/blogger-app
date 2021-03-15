@@ -1,51 +1,38 @@
-import moment from 'moment';
-import Typography from '@material-ui/core/Typography';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { selectPosts } from '../../redux/app/blogs/blogs.selectors';
-import { withRouter } from 'react-router-dom';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import moment from 'moment';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+
+//Selectors
+import { selectPosts } from '../../redux/app/blogs/blogs.selectors';
+
+//Material UI Components
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
+import Button from '@material-ui/core/Button';
+import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import TableContainer from '@material-ui/core/TableContainer';
 
-const useStyles = makeStyles(theme => ({
-	root: {
-		width: '100%',
-		maxWidth: '36ch',
-		backgroundColor: theme.palette.background.paper
-	},
-	paper: {
-		padding: theme.spacing(2),
-		color: theme.palette.text.secondary,
-		minHeight: '80vh'
-	},
-	inline: {
-		display: 'inline'
-	},
-	message: {
-		textAlign: 'center',
-		padding: '15px 20px'
-	},
-	table: {
-		minWidth: 650
-	}
-}));
-const AllPosts = ({ posts, history }) => {
+//Material UI styles
+import useStyles from '../pages.styles';
+
+//List of Blog-posts page component
+const AllPostsPage = ({ posts, history }) => {
 	const classes = useStyles();
+
 	const handleClick = post => {
 		history.push({
 			pathname: '/dashboard/blog-post',
 			state: post
 		});
 	};
+
 	return (
 		<Paper elevation={3} className={classes.paper}>
 			<Box textAlign='right' marginBottom='20px'>
@@ -98,7 +85,9 @@ const AllPosts = ({ posts, history }) => {
 		</Paper>
 	);
 };
+
+//Get all posts from state container
 const mapStateToProps = createStructuredSelector({
 	posts: selectPosts
 });
-export default connect(mapStateToProps)(withRouter(AllPosts));
+export default connect(mapStateToProps)(withRouter(AllPostsPage));
