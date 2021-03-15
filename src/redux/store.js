@@ -1,6 +1,6 @@
 import { createStore } from 'redux';
-import logger from 'redux-logger';
 import { persistStore } from 'redux-persist';
+// import logger from 'redux-logger';
 
 //Root reducer named as AppReducer that can holds all reducers
 import AppReducer from './app/app.reducer';
