@@ -1,4 +1,4 @@
-import { applyMiddleware, createStore } from 'redux';
+import { createStore } from 'redux';
 import logger from 'redux-logger';
 import { persistStore } from 'redux-persist';
 
@@ -7,7 +7,8 @@ import AppReducer from './app/app.reducer';
 
 // create store by passing App reducer and config the logger;
 // middleware for logging all redux state change actions
-const store = createStore(AppReducer, applyMiddleware(logger));
+// applyMiddleware(logger); //Apply in development mode for logging
+const store = createStore(AppReducer);
 
 //export persistor config referece
 export const persistor = persistStore(store);
