@@ -33,5 +33,3 @@ Redux is used to store App state that contains following
 
 ## We also maintained data locally using Redux-persist library
 
-## Surge Link : ()
-
