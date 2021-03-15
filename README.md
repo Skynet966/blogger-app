@@ -23,7 +23,7 @@ location: Edit and Delete Page
 ## Like the blog post.
 Path: '/blog-post/<title of post>'
 location: Detail Page
-
+Note: For liking the blog post you have to go to home and then click on any post and press the like button from bottom right corner.
 ## For enhancing the UI experience we used Material UI Components and Icons
 
 ## We used both Redux and Context API in this application
