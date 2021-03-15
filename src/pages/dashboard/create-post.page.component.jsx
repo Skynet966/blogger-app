@@ -10,6 +10,10 @@ import Categories from '../../data/categories.json';
 import { makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { withRouter } from 'react-router-dom';
+import Box from '@material-ui/core/Box';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles(theme => ({
 	form: {
@@ -18,6 +22,11 @@ const useStyles = makeStyles(theme => ({
 	},
 	submit: {
 		margin: theme.spacing(3, 0, 2)
+	},
+	paper: {
+		padding: theme.spacing(2),
+		color: theme.palette.text.secondary,
+		minHeight: '80vh'
 	}
 }));
 
@@ -79,71 +88,85 @@ const CreatePost = ({ createPost, posts, history }) => {
 			setTimeout(() => {
 				history.push({
 					pathname: '/dashboard/blog-post',
-					state: posts.find(x => x.title === post.title)
+					state: post.title
 				});
-			}, 2000);
+			}, 1000);
 		}
 	};
 	return (
-		<form className={classes.form} noValidate onSubmit={handleSubmit}>
-			<TextField
-				error={data.validation.title}
-				helperText={data.validation.title ? data.title_message : ''}
-				onBlur={handleBlur}
-				variant='outlined'
-				margin='normal'
-				required
-				fullWidth
-				label='Post Title'
-				name='title'
-				autoComplete='off'
-				autoFocus
-				onChange={handleChange}
-			/>
-			<Autocomplete
-				options={Categories.category}
-				getOptionLabel={option => option.title}
-				renderInput={params => (
-					<TextField
-						{...params}
-						label='Select Category'
-						variant='outlined'
-						name='category'
-						onSelect={handleChange}
-						error={data.validation.category}
-						helperText={data.validation.category ? 'Category is required' : ''}
-						required
-					/>
-				)}
-			/>
-			<TextField
-				variant='outlined'
-				margin='normal'
-				required
-				fullWidth
-				error={data.validation.content}
-				helperText={
-					data.validation.content
-						? 'Content must have more than three character'
-						: ''
-				}
-				label='Post Content'
-				name='content'
-				onChange={handleChange}
-				autoComplete='off'
-				multiline
-				rows={4}
-			/>
-			<Button
-				type='submit'
-				fullWidth
-				variant='contained'
-				color='primary'
-				className={classes.submit}
-			>
-				Publish
-			</Button>
-		</form>
+		<Paper elevation={3} className={classes.paper}>
+			<Box>
+				<Button
+					variant='contained'
+					color='primary'
+					onClick={() => history.push('/dashboard')}
+				>
+					<KeyboardBackspaceIcon />
+					Go Back to All Posts
+				</Button>
+			</Box>
+			<form className={classes.form} noValidate onSubmit={handleSubmit}>
+				<TextField
+					error={data.validation.title}
+					helperText={data.validation.title ? data.title_message : ''}
+					onBlur={handleBlur}
+					variant='outlined'
+					margin='normal'
+					required
+					fullWidth
+					label='Post Title'
+					name='title'
+					autoComplete='off'
+					autoFocus
+					onChange={handleChange}
+				/>
+				<Autocomplete
+					options={Categories.category}
+					getOptionLabel={option => option.title}
+					renderInput={params => (
+						<TextField
+							{...params}
+							label='Select Category'
+							variant='outlined'
+							name='category'
+							onSelect={handleChange}
+							error={data.validation.category}
+							helperText={
+								data.validation.category ? 'Category is required' : ''
+							}
+							required
+						/>
+					)}
+				/>
+				<TextField
+					variant='outlined'
+					margin='normal'
+					required
+					fullWidth
+					error={data.validation.content}
+					helperText={
+						data.validation.content
+							? 'Content must have more than three character'
+							: ''
+					}
+					label='Post Content'
+					name='content'
+					onChange={handleChange}
+					autoComplete='off'
+					multiline
+					rows={4}
+				/>
+				<Button
+					type='submit'
+					fullWidth
+					variant='contained'
+					color='primary'
+					className={classes.submit}
+				>
+					Publish
+				</Button>
+			</form>
+		</Paper>
 	);
 };
 

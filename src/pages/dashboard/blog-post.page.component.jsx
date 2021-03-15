@@ -12,10 +12,11 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { withRouter } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 const useStyles = makeStyles(theme => ({
 	form: {
-		width: '100%', // Fix IE 11 issue.
+		width: '100%', //Fix IE 11 issue.
 		marginTop: theme.spacing(1)
 	},
 	submit: {
@@ -32,7 +33,10 @@ const BlogPost = ({
 }) => {
 	const classes = useStyles();
 	const [data, setData] = useState({
-		post: state,
+		post:
+			state instanceof Object
+				? state
+				: posts.find(post => post.title === state),
 		validation: {
 			title: false,
 			category: false,
@@ -91,11 +95,19 @@ const BlogPost = ({
 	};
 	const handleDelete = () => {
 		deletePost(data.post.post_id);
-		history.push('/dashboard/posts');
+		history.push('/dashboard');
 	};
 	return (
 		<Box>
 			<ButtonGroup disableElevation variant='contained' color='primary'>
+				<Button
+					variant='contained'
+					color='primary'
+					onClick={() => history.push('/dashboard')}
+				>
+					<KeyboardBackspaceIcon />
+					Go Back to All Posts
+				</Button>
 				{data.edit_mode ? (
 					<Button ariant='contained' color='primary' onClick={toggleEditMode}>
 						Cancel
