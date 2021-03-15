@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { useContext } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
@@ -17,7 +18,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 
 //Material UI styles
 import useStyles from '../pages.styles';
-
+import { ThemeContext } from '../../App';
 //Preview All Blog-posts Home page component
 const HomePage = ({ posts, history }) => {
 	const classes = useStyles();
@@ -30,8 +31,13 @@ const HomePage = ({ posts, history }) => {
 		});
 	};
 
+	//Use of Context API
+	const theme = useContext(ThemeContext);
+
 	return (
-		<Container>
+		<Container
+			style={{ background: theme.background, color: theme.foreground }}
+		>
 			<Grid container justify='space-around' className={classes.container}>
 				{posts.length === 0 ? (
 					<Typography
